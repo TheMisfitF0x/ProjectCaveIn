@@ -7,6 +7,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/InputSettings.h"
 #include "Public/Sanity.h"
+#include "GameplayTagContainer.h"
 
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
@@ -23,6 +24,7 @@ AProjectCaveInCharacter::AProjectCaveInCharacter()
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
 
+	//Create a Sanity Component
 	sanityComponent = CreateDefaultSubobject<USanity>(TEXT("Sanity"));
 
 	// Create a CameraComponent	
