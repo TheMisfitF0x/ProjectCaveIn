@@ -3,9 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
 #include "Components/ActorComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Sanity.generated.h"
-
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTCAVEIN_API USanity : public UActorComponent
@@ -17,21 +18,35 @@ public:
 	USanity();
 
 	UFUNCTION(BlueprintCallable)
-	void DamageSanity(int damageToSanity);
+	void DamageSanity(float damageToSanity);
 
 	UFUNCTION(BlueprintCallable)
-	void HealSanity(int healthToSanity);
+	void HealSanity(float healthToSanity);
 
 	UFUNCTION(BlueprintCallable)
-	int GetSanity();
+	float GetSanity();
+
+	void SetCamera(UCameraComponent* camera);
+
+	void OnChange();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	int sanityAmt;
+	UPROPERTY(EditAnywhere)
+	float sanityAmt;
+
+	UPROPERTY(VisibleAnywhere)
+	float sanityMax;
+
+	UPROPERTY(VisibleAnywhere)
+	float percentValue;
 
 	bool isAlive;
+
+	UPROPERTY(EditAnywhere)
+	UCameraComponent* playerCamComponent;
 
 public:	
 	// Called every frame

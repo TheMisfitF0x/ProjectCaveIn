@@ -18,16 +18,22 @@ public:
 	USanityDamager();
 
 	UFUNCTION(BlueprintCallable)
-	void DamageSanity(USanity* playerSanity);
+	void DamageSanity(AActor* playerSanity);
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere)
-	int damageAmt;
+	float damageAmt;
 
-	bool isRepeating;
+	UPROPERTY(EditAnywhere)
+		bool isTickingTrigger;
+
+	UPROPERTY(VisibleAnywhere)
+		USanity* damageTarget;
+
+	bool isDamaging;
 
 public:	
 	// Called every frame

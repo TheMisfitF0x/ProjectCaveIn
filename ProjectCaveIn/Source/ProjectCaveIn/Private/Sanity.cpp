@@ -9,8 +9,9 @@ USanity::USanity()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	sanityAmt = 100;
+	sanityMax = 100000;
+	sanityAmt = 100000;
+	percentValue = sanityAmt / sanityMax;
 	isAlive = true;
 	// ...
 }
@@ -38,17 +39,32 @@ void USanity::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponen
 	}
 }
 
-void USanity::DamageSanity(int damageToSanity)
+void USanity::DamageSanity(float damageToSanity)
 {
 	sanityAmt -= damageToSanity;
+	OnChange();
 }
 
-void USanity::HealSanity(int healthToSanity)
+void USanity::HealSanity(float healthToSanity)
 {
 	sanityAmt += healthToSanity;
+	OnChange();
 }
 
-int USanity::GetSanity()
+float USanity::GetSanity()
 {
 	return sanityAmt;
+}
+
+void USanity::SetCamera(UCameraComponent* camera)
+{
+	playerCamComponent = camera;
+}
+
+void USanity::OnChange()
+{
+	percentValue = sanityAmt / sanityMax;
+	FVector4 newSaturation = FVector4(percentValue, percentValue, percentValue, 1);
+	playerCamComponent->PostProcessSettings.ColorSaturation = newSaturation;
+	UKismetSystemLibrary::PrintString(this, TEXT("Sanity changed"), true, true);
 }

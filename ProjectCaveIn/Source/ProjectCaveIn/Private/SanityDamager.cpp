@@ -10,7 +10,7 @@ USanityDamager::USanityDamager()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 	damageAmt = 20;
-	isRepeating = false;
+	isDamaging = false;
 	// ...
 }
 
@@ -31,10 +31,34 @@ void USanityDamager::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+	if (isDamaging = true && damageTarget != NULL)
+	{
+		damageTarget->DamageSanity(damageAmt);
+	}
 }
 
-void USanityDamager::DamageSanity(USanity* playerSanity)
+void USanityDamager::DamageSanity(AActor* player)
 {
-	playerSanity->DamageSanity(damageAmt);
+	USanity* playerSanity = player->FindComponentByClass<USanity>();
+	if (playerSanity != NULL)
+	{
+		if (isTickingTrigger == true)
+		{
+			if (isDamaging == false)
+			{
+				damageTarget = playerSanity;
+				isDamaging = true;
+			}
+			else
+			{
+				isDamaging = false;
+				damageTarget = NULL;
+			}
+		}
+		else
+		{
+			playerSanity->DamageSanity(damageAmt);
+		}
+	}
 }
 

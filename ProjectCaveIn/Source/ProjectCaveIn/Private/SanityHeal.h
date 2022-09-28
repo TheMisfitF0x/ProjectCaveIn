@@ -19,15 +19,23 @@ public:
 	USanityHeal();
 
 	UFUNCTION(BlueprintCallable)
-	void RestoreSanity(USanity* playerSanity);
+	void RestoreSanity(AActor* playerSanity);
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnywhere)
-	int restoreAmt;
+	float restoreAmt;
 
-	bool isRepeating;
+	UPROPERTY(EditAnywhere)
+	bool isTickingTrigger;
+
+	UPROPERTY(VisibleAnywhere)
+		USanity* healTarget;
+
+	bool isHealing;
+
+	
 
 public:	
 	// Called every frame

@@ -11,7 +11,7 @@ USanityHeal::USanityHeal()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 	restoreAmt = 20;
-	isRepeating = false;
+	isHealing = false;
 	// ...
 }
 
@@ -30,11 +30,34 @@ void USanityHeal::BeginPlay()
 void USanityHeal::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	if (isHealing = true && healTarget != NULL)
+	{
+		healTarget -> HealSanity(restoreAmt);
+	}
 	// ...
 }
 
-void USanityHeal::RestoreSanity(USanity* playerSanity)
+void USanityHeal::RestoreSanity(AActor* player)
 {
-	playerSanity -> HealSanity(restoreAmt);
+	USanity* playerSanity = player->FindComponentByClass<USanity>();
+	if (playerSanity != NULL)
+	{
+		if (isTickingTrigger == true )
+		{
+			if (isHealing == false)
+			{
+				healTarget = playerSanity;
+				isHealing = true;
+			}
+			else
+			{
+				isHealing = false;
+				healTarget = NULL;
+			}
+		}
+		else 
+		{
+			playerSanity->HealSanity(restoreAmt);
+		}
+	}
 }
