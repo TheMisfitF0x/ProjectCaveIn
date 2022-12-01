@@ -10,6 +10,7 @@ USanity::USanity()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 	sanityMax = 500;
+	sanityMin = -200;
 	sanityAmt = 500;
 	percentValue = sanityAmt / sanityMax;
 	isAlive = true;
@@ -36,6 +37,18 @@ void USanity::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponen
 	if (sanityAmt <= 0)
 	{
 		isAlive = false;
+	}
+
+	if (sanityAmt < sanityMin)
+	{
+		sanityAmt = sanityMin;
+		OnChange();
+	}
+
+	if (sanityAmt > sanityMax)
+	{
+		sanityAmt = sanityMax;
+		OnChange();
 	}
 }
 

@@ -41,6 +41,9 @@ protected:
 	float sanityMax;
 
 	UPROPERTY(VisibleAnywhere)
+	float sanityMin;
+
+	UPROPERTY(VisibleAnywhere)
 	float percentValue;
 
 	bool isAlive;
